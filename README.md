@@ -1,6 +1,14 @@
-# discord.js TypeScript テンプレート
+# discord-today-anime
 
-Visual Studio Code を使用することを推奨します。
+24時間以内に放送されるアニメのタイトルをdiscordに流します。
+
+## development
+
+```
+cp .env.sample .env
+```
+
+- .envにdiscordAppのCLIENT IDを設定して下さい
 
 ## スクリプト
 
