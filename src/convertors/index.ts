@@ -1,12 +1,8 @@
-import {
-  RawSyoboiResponse,
-  SyoboiResponse,
-  RawProgram,
-  Program,
-} from "../const";
 import { parseFlag } from "./flag";
 import { parseCategory } from "./category";
 import { parseUrls } from "./urls";
+import { RawProgram, RawSyoboiResponse } from "../api-client/consts";
+import { Program, SyoboiResponse } from "../consts";
 
 const programConvertor = (program: RawProgram): Program => ({
   ...program,

@@ -1,4 +1,4 @@
-import { Program } from "../const";
+import { Program } from "../consts";
 
 export const parseUrls = (rawUrls: string): Program["Urls"] => {
   if (rawUrls === "") {

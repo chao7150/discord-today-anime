@@ -1,4 +1,4 @@
-import { Program } from "../const";
+import { Program } from "../consts";
 
 export const parseCategory = (rawCategory: string): Program["Cat"] => {
   switch (rawCategory) {

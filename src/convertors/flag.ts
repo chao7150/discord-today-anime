@@ -1,4 +1,4 @@
-import { Program } from "../const";
+import { Program } from "../consts";
 
 export const parseFlag = (rawFlag: string): Program["Flag"] => {
   switch (rawFlag) {
