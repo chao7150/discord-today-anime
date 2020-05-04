@@ -17,9 +17,7 @@ export const messageDecorator = (programs: SyoboiResponse["items"]): any => {
     embed: {
       title: "24時間以内に放送開始するアニメ",
       url: "https://cal.syoboi.jp/",
-      fields: programs
-        .filter((item) => [1, 2, 3, 4, 5, 6, 7, 19].includes(item.ChID))
-        .map(decorateField),
+      fields: programs.map(decorateField),
     },
   };
 };
