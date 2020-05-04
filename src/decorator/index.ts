@@ -9,12 +9,12 @@ const decorateField = (item: Program): Field => ({
   value: `[${item.Title}](${createUrls(item.Urls)})`,
 });
 
-export const messageDecorator = (syobo: SyoboiResponse): any => {
+export const messageDecorator = (programs: SyoboiResponse["items"]): any => {
   return {
     embed: {
       title: "24時間以内に放送開始するアニメ",
       url: "https://cal.syoboi.jp/",
-      fields: syobo.items
+      fields: programs
         .filter((item) => [1, 2, 3, 4, 5, 6, 7, 19].includes(item.ChID))
         .map(decorateField),
     },
