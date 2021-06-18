@@ -36,7 +36,7 @@ client.once("ready", async () => {
   // TODO: debug用なので消す
   const programs = convertor(
     await fetch({
-      start: new Date(Date.now() - 35 * 60 * 1000),
+      start: new Date(Date.now() - 60 * 60 * 1000),
       end: new Date(),
     })
   )
@@ -44,10 +44,26 @@ client.once("ready", async () => {
     .filter(isNightProgram);
   programs.forEach((program) => {
     (
-      client.channels.cache.get(process.env.DISCORD_ANIME_COIN_CHANNEL_ID!) as TextChannel
-    ).send(
-      `${program.Title} 第${program.Count}話 『${program.SubTitle}』 の評価は？`
-    );
+      client.channels.cache.get(
+        process.env.DISCORD_ANIME_COIN_CHANNEL_ID!
+      ) as TextChannel
+    )
+      .send(
+        `${program.Title} 第${program.Count}話 『${program.SubTitle}』 の評価は？`
+      )
+      .then(async (message) => {
+        await message.react("0️⃣");
+        await message.react("1️⃣");
+        await message.react("2️⃣");
+        await message.react("3️⃣");
+        await message.react("4️⃣");
+        await message.react("5️⃣");
+        await message.react("6️⃣");
+        await message.react("7️⃣");
+        await message.react("8️⃣");
+        await message.react("9️⃣");
+        await message.react("🔟");
+      });
   });
   // TODO: ↑消す
   cron.schedule("0,30 * * * *", async () => {
@@ -61,10 +77,26 @@ client.once("ready", async () => {
       .filter(isNightProgram);
     programs.forEach((program) => {
       (
-        client.channels.cache.get(process.env.DISCORD_ANIME_COIN_CHANNEL_ID!) as TextChannel
-      ).send(
-        `${program.Title} 第${program.Count}話 『${program.SubTitle}』 の評価は？`
-      );
+        client.channels.cache.get(
+          process.env.DISCORD_ANIME_COIN_CHANNEL_ID!
+        ) as TextChannel
+      )
+        .send(
+          `${program.Title} 第${program.Count}話 『${program.SubTitle}』 の評価は？`
+        )
+        .then(async (message) => {
+          await message.react("0️⃣");
+          await message.react("1️⃣");
+          await message.react("2️⃣");
+          await message.react("3️⃣");
+          await message.react("4️⃣");
+          await message.react("5️⃣");
+          await message.react("6️⃣");
+          await message.react("7️⃣");
+          await message.react("8️⃣");
+          await message.react("9️⃣");
+          await message.react("🔟");
+        });
     });
   });
 });
