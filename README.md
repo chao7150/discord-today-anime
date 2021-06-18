@@ -8,7 +8,7 @@
 cp .env.sample .env
 ```
 
-- .envにdiscordAppのCLIENT IDを設定して下さい
+- .envにdiscordAppのCLIENT IDとアニメ評価用チャンネルのIDを設定して下さい
 
 ## スクリプト
 
