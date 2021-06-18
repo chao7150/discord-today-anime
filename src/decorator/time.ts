@@ -1,5 +1,4 @@
-const zeroPadding = (str: string, len: number): string =>
-  ("0".repeat(len) + str).slice(-len);
+import { zeroPadding } from "../utils/time";
 
 export const formatTime = (timeStamp: number): string => {
   const date = new Date(timeStamp * 1000);

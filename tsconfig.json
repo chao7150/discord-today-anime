@@ -63,5 +63,7 @@
     "pretty": true,
     "forceConsistentCasingInFileNames": true,
     "newLine": "LF"
-  }
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["./src/**/*-test.ts"]
 }
