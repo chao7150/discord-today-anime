@@ -37,7 +37,7 @@ client.once("ready", async () => {
   cron.schedule("0,30 * * * *", async () => {
     const programs = convertor(
       await fetch({
-        start: new Date(Date.now() - 31 * 60 * 1000),
+        start: new Date(Date.now() - 30 * 60 * 1000),
         end: new Date(),
       })
     )
