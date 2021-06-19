@@ -24,7 +24,6 @@ export const format = (date: Date): string => {
 export const fetch = async (
   params?: SyoboiParams | undefined
 ): Promise<RawSyoboiResponse> => {
-  console.log(params);
   return axios
     .get<RawSyoboiResponse>("http://cal.syoboi.jp/rss2.php", {
       params: {
