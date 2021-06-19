@@ -115,7 +115,6 @@ client.on("messageReactionAdd", async (reaction, user) => {
   const sheet = doc.sheetsByTitle["records"];
   const title = reaction.message.embeds[0].fields[0].value;
   const count = reaction.message.embeds[0].fields[1].value;
-  console.log(user);
   sheet.addRow({
     datetime: new Date().toISOString(),
     title,
