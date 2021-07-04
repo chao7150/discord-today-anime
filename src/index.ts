@@ -33,6 +33,9 @@ const replyTodayAnime = (message: Message): void => {
 };
 
 client.on("message", (message) => replyTodayAnime(message));
+
+let lastPostedPrograms: Array<number> = [];
+
 client.once("ready", async () => {
   cron.schedule("0,30 * * * *", async () => {
     const programs = convertor(
@@ -42,7 +45,9 @@ client.once("ready", async () => {
       })
     )
       .items.filter(isTokyoWatchableChannelProgram)
-      .filter(isNightProgram);
+      .filter(isNightProgram)
+      .filter((program) => !lastPostedPrograms.includes(program.PID));
+    lastPostedPrograms = programs.map((program) => program.PID);
     programs.forEach((program) => {
       (
         client.channels.cache.get(
