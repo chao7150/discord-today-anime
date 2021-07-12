@@ -118,10 +118,10 @@ const emojiToNumber = (emoji: string): number | undefined => {
 };
 
 client.on("messageReactionAdd", async (reaction, user) => {
+  if (user.id === client.user!.id) return;
   if (reaction.partial) {
     await reaction.fetch();
   }
-  if (reaction.me) return;
   if (reaction.message.channel.id !== process.env.DISCORD_ANIME_COIN_CHANNEL_ID)
     return;
   if (reaction.message.author.id !== client.user!.id) return;
