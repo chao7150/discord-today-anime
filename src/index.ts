@@ -4,9 +4,13 @@ import { messageDecorator } from "./decorator";
 import { convertor } from "./convertors";
 import { isNightProgram, isTokyoWatchableChannelProgram } from "./filters";
 import cron from "node-cron";
-import { doc, initialize } from "./google-spread-sheet";
+import { initialize } from "./google-spread-sheet";
+import { isPopularProgram } from "./filters/popular";
+import { fetchBlacklist, fetchWhitelist } from "./google-spread-sheet/fetchRow";
+import { GoogleSpreadsheet } from "google-spreadsheet";
 
 const client = new Client();
+let doc: GoogleSpreadsheet;
 
 const replyTodayAnime = (message: Message): void => {
   if (message.author.bot) {
@@ -38,6 +42,10 @@ let lastPostedPrograms: Array<number> = [];
 
 client.once("ready", async () => {
   cron.schedule("0,30 * * * *", async () => {
+    const [whitelist, blacklist] = await Promise.all([
+      fetchWhitelist(doc),
+      fetchBlacklist(doc),
+    ]);
     const programs = convertor(
       await fetch({
         start: new Date(Date.now() - 30 * 60 * 1000),
@@ -45,7 +53,7 @@ client.once("ready", async () => {
       })
     )
       .items.filter(isTokyoWatchableChannelProgram)
-      .filter(isNightProgram)
+      .filter(isPopularProgram({ whitelist, blacklist }))
       .filter((program) => !lastPostedPrograms.includes(program.PID));
     lastPostedPrograms = programs.map((program) => program.PID);
     programs.forEach((program) => {
@@ -130,6 +138,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
   });
 });
 
-initialize().then(() => {
+initialize().then((initializedDoc) => {
+  doc = initializedDoc;
   client.login(process.env.CLIENT_ID);
 });
