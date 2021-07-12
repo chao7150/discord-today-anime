@@ -9,7 +9,7 @@ import { isPopularProgram } from "./filters/popular";
 import { fetchBlacklist, fetchWhitelist } from "./google-spread-sheet/fetchRow";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 
-const client = new Client();
+const client = new Client({ partials: ["MESSAGE", "REACTION"] });
 let doc: GoogleSpreadsheet;
 
 const replyTodayAnime = (message: Message): void => {
@@ -118,6 +118,9 @@ const emojiToNumber = (emoji: string): number | undefined => {
 };
 
 client.on("messageReactionAdd", async (reaction, user) => {
+  if (reaction.partial) {
+    await reaction.fetch();
+  }
   if (reaction.me) return;
   if (reaction.message.channel.id !== process.env.DISCORD_ANIME_COIN_CHANNEL_ID)
     return;
