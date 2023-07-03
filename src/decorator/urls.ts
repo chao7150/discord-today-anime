@@ -1,7 +1,7 @@
 import { Program } from "../consts";
 
 export const createUrls = (urls: Program["Urls"]): string | undefined => {
-  if (urls === {}) {
+  if (Object.keys(urls).length === 0) {
     return undefined;
   }
   if ("公式" in urls) {
