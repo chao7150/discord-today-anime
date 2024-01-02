@@ -3,6 +3,7 @@ import { fetch } from "./api-client";
 import { messageDecorator } from "./decorator";
 import { convertor } from "./convertors";
 import { isNightProgram, isTokyoWatchableChannelProgram } from "./filters";
+import { Program } from "./consts";
 
 const client = new Client({ partials: ["MESSAGE", "CHANNEL", "GUILD_MEMBER"] });
 let guild: Guild | undefined = undefined;
@@ -32,13 +33,21 @@ const replyTodayAnime = async (message: Message): Promise<void> => {
     }
   }
   if (message.content === "今日のアニメ") {
-    const promise = fetch();
-    promise.then((rawResp) => {
-      const programs = convertor(rawResp).items.filter(
-        isTokyoWatchableChannelProgram
-      );
-      message.channel.send(messageDecorator(programs));
-    });
+    const rawResp = await fetch();
+    const programs = convertor(rawResp).items.filter(
+      isTokyoWatchableChannelProgram
+    );
+    const programChunks: Program[][] = [];
+    programs.forEach((program, index) => {
+      const chunkNumber = Math.floor(index / 25);
+      if (programChunks[chunkNumber] === undefined) {
+        programChunks[chunkNumber] = [];
+      }
+      programChunks[chunkNumber].push(program);
+    })
+    programChunks.forEach(async (programChunk) => {
+      await message.channel.send(messageDecorator(programChunk));
+    })
   }
   if (message.content === "今日の深夜アニメ") {
     const promise = fetch();
