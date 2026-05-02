@@ -1,5 +1,5 @@
 import axios from "axios";
-import { zeroPadding } from "../utils/time";
+import { toTokyoDate, zeroPadding } from "../utils/time";
 import { RawSyoboiResponse } from "./consts";
 
 export interface SyoboiParams {
@@ -8,13 +8,14 @@ export interface SyoboiParams {
 }
 
 export const format = (date: Date): string => {
-  return `${date.getFullYear()}${zeroPadding(
-    (date.getMonth() + 1).toString(),
+  const tokyoDate = toTokyoDate(date);
+  return `${tokyoDate.getUTCFullYear()}${zeroPadding(
+    (tokyoDate.getUTCMonth() + 1).toString(),
     2
-  )}${zeroPadding(date.getDate().toString(), 2)}${zeroPadding(
-    date.getHours().toString(),
+  )}${zeroPadding(tokyoDate.getUTCDate().toString(), 2)}${zeroPadding(
+    tokyoDate.getUTCHours().toString(),
     2
-  )}${zeroPadding(date.getMinutes().toString(), 2)}`;
+  )}${zeroPadding(tokyoDate.getUTCMinutes().toString(), 2)}`;
 };
 
 /**
