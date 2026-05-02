@@ -1,9 +1,11 @@
-FROM node:latest
+FROM node:20
 
-COPY package.json /work/package.json
 WORKDIR /work
-RUN npm install
-COPY . /work
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
 
 RUN npm run compile
 CMD ["npm", "run", "start"]

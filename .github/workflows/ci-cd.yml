@@ -43,6 +43,9 @@ jobs:
       contents: read
 
     steps:
+      - name: Mask Role ARN
+        run: echo "::add-mask::${{ secrets.AWS_ROLE_TO_ASSUME }}"
+
       - name: Checkout
         uses: actions/checkout@v4
 
