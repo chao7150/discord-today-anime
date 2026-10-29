@@ -1,4 +1,3 @@
-import axios from "axios";
 import { toTokyoDate, zeroPadding } from "../utils/time";
 import { RawSyoboiResponse } from "./consts";
 
@@ -25,13 +24,18 @@ export const format = (date: Date): string => {
 export const fetch = async (
   params?: SyoboiParams | undefined
 ): Promise<RawSyoboiResponse> => {
-  return axios
-    .get<RawSyoboiResponse>("http://cal.syoboi.jp/rss2.php", {
-      params: {
-        alt: "json",
-        start: params?.start && format(params.start),
-        end: params?.end && format(params.end),
-      },
-    })
-    .then((r) => r.data);
+  const query = new URLSearchParams({ alt: "json" });
+  if (params?.start) {
+    query.set("start", format(params.start));
+  }
+  if (params?.end) {
+    query.set("end", format(params.end));
+  }
+  const response = await globalThis.fetch(
+    `http://cal.syoboi.jp/rss2.php?${query}`
+  );
+  if (!response.ok) {
+    throw new Error(`cal.syoboi.jp が ${response.status} を返しました`);
+  }
+  return (await response.json()) as RawSyoboiResponse;
 };
